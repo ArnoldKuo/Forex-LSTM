@@ -24,14 +24,7 @@ currency2 = 'NTD'
 op        = spotbuy
 
 # Importing the training set
-# read first month	
-#filename=currency1+currency2+"_"+year+month
-#dataset = pd.read_csv(datapath+filename+".csv")
-#training_set = dataset.iloc[:,op:(op+1)].values 
-
 training_set = [[0]]
-
-# read other months
 months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
 for month in months:
     filename=currency1+currency2+"_"+year+month
@@ -70,9 +63,9 @@ from keras.layers import LSTM
 import tensorflow as tf
 
 # for GPU memory allocation
-#gpu_options = tf.GPUOptions(allow_growth=True)
-#sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
-#tf.keras.backend.set_session(sess)
+gpu_options = tf.GPUOptions(allow_growth=True)
+sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
+tf.keras.backend.set_session(sess)
 
 # Initialising the RNN
 # Creating an object of Sequential class to create the RNN.
