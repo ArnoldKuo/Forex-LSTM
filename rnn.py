@@ -24,20 +24,13 @@ currency2 = 'NTD'
 op        = spotbuy
 
 # Importing the training set
-# read first month	
-#filename=currency1+currency2+"_"+year+month
-#dataset = pd.read_csv(datapath+filename+".csv")
-#training_set = dataset.iloc[:,op:(op+1)].values 
-
 training_set = [[0]]
-
-# read other months
 months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
 for month in months:
     filename=currency1+currency2+"_"+year+month
     dataset = pd.read_csv(datapath+filename+".csv")
-    training_set1 = dataset.iloc[:,op:(op+1)].values
-    training_set = np.append(training_set, training_set1, axis=0)
+    training_tmp = dataset.iloc[:,op:(op+1)].values
+    training_set = np.append(training_set, training_tmp, axis=0)
 
 training_set = np.delete(training_set, [0], axis=0)
 #print(training_set)
