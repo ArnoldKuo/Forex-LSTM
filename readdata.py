@@ -39,9 +39,9 @@ training_len = len(training_set)
 print(training_len)
 
 # Data Visualization
-plt.plot(training_set[op], color = 'red', label = year+' Price')
+plt.plot(training_set[op], color = 'red', label = year+' Real Price')
 plt.xticks(range(0,training_set.shape[0],30),training_set['Date'].loc[::30],rotation=45)
-plt.title(year+' Forex')
+plt.title('Forex (USD-NTD)')
 plt.xlabel('Date')
 plt.ylabel('Price')
 plt.legend()
