@@ -8,8 +8,8 @@
 
 ## forex predict 1 day
 `$python3 rnn.py` <br />
-![](./assets/201903_forex_predict.JPG)
+![](./assets/201901_forex_predict.jpg)
 
 ## forex predict 5 days
 `$python3 lstm.py` <br />
-![](./assets/2019_forex_predict5days.JPG)
+![](./assets/2019_forex_predict5days.jpg)
