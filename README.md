@@ -9,3 +9,5 @@
 ## forex predict
 `$python3 rnn.py` <br />
 ![](./assets/201903_forex_predict.JPG)
+`$python3 lstm.py` <br />
+![](./assets/2019_forex_predict5days.JPG)
