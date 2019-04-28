@@ -14,7 +14,7 @@ cashsell  = 10
 spotsell  = 11
 
 # Configuration
-epochs    = 7000
+epochs    = 5000
 batch_size= 128
 datapath  = 'data/'
 currency1 = 'USD'
