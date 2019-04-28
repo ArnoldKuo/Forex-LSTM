@@ -16,3 +16,4 @@ https://rate.bot.com.tw/xrt/history?Lang=en-US <br />
 `$python3 lstm.py` (train & save model then predict)<br />
 ![](./assets/2019_forex_predict_5days.jpg)
 `$python3 lstm_load.py` (load model then predict)<br />
+![](./assets/2019_forex_load_predict_5days.jpg)
