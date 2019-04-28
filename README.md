@@ -1,6 +1,7 @@
 # Forex-LSTM
 
 # Demo
+## forex dataset
 Inquiry Historical Foreign Exchange Rate from Bank of Taiwan <br />
 https://rate.bot.com.tw/xrt/history?Lang=en-US <br />
 ## forex real
