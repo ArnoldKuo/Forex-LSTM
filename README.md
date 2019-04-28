@@ -4,7 +4,7 @@
 
 ## forex real
 `$python3 readdata.py` <br />
-![](./assets/2018_forex_real.JPG)
+![](./assets/2018_forex_real.jpg)
 
 ## forex predict 1 day
 `$python3 rnn.py` <br />
