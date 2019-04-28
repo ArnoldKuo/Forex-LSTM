@@ -1,5 +1,5 @@
 # Forex-LSTM
-
+Forex of USD-NTD
 # Demo
 
 ## forex real
