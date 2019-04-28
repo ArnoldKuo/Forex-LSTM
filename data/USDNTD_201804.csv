@@ -1,4 +1,4 @@
-Date,CashBuy,SpotBuy,Forward-10DaysBuy,Forward-30DaysBuy,Forward-60DaysBuy,Forward-90DaysBuy,Forward-120DaysBuy,Forward-150DaysBuy,Forward-180DaysBuy,CashSell,SpotSell,Forward-10Days-Sell,Forward-30Days-Sell,Forward-60Days-Sell,Forward-90Days-Sell,Forward-120Days-Sell,Forward-150Days-Sell,Forward-180Days-Sell
+Date,CashBuy,SpotBuy,Forward-10Days-Buy,Forward-30Days-Buy,Forward-60Days-Buy,Forward-90Days-Buy,Forward-120Days-Buy,Forward-150Days-Buy,Forward-180Days-Buy,CashSell,SpotSell,Forward-10Days-Sell,Forward-30Days-Sell,Forward-60Days-Sell,Forward-90Days-Sell,Forward-120Days-Sell,Forward-150Days-Sell,Forward-180Days-Sell
 20180402,28.785,29.085,29.064,29.022,28.957,28.89,28.818,28.743,28.668,29.327,29.185,29.168,29.133,29.069,29.003,28.942,28.874,28.806
 20180403,28.79,29.09,29.068,29.024,28.96,28.89,28.813,28.74,28.662,29.332,29.19,29.173,29.14,29.075,29.009,28.937,28.87,28.811
 20180409,28.845,29.145,29.122,29.076,29.015,28.941,28.863,28.795,28.712,29.387,29.245,29.227,29.19,29.126,29.053,28.987,28.921,28.855
