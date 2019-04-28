@@ -12,4 +12,4 @@
 
 ## forex predict 5 days
 `$python3 lstm.py` <br />
-![](./assets/2019_forex_predict5days.jpg)
+![](./assets/2019_forex_predict_5days.jpg)
