@@ -1,6 +1,6 @@
 # Forex-LSTM
 
-## usage
+# Demo
 
 ## forex real
 `$python3 readdata.py`
