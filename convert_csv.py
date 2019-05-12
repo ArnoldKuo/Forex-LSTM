@@ -1,56 +1,44 @@
-# Forex using LSTM
+# convert forex.csv file
 
-#-----------------------------------------------
-# Part 1 - Data Preprocessing
-#----------------------------------------------- 
-# Importing the libraries
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-# column in dataset
-cashbuy   = 1
-spotbuy   = 2
-forward_10Days_Buy = 3
-forward_30Days_Buy = 4
-forward_60Days_Buy = 5
-forward_90Days_Buy = 6
-forward_120Days_Buy = 7
-forward_150Days_Buy = 8
-forward_180Days_Buy = 9
-cashsell  = 10
-spotsell  = 11
-forward_10Days_Sell = 12
-forward_30Days_Sell = 13
-forward_60Days_Sell = 14
-forward_90Days_Sell = 15
-forward_120Days_Sell = 16
-forward_150Days_Sell = 17
-forward_180Days_Sell = 18
-
-# Configuration
-epochs    = 1000
 datapath  = 'data/'
-year      = '2019'
-month     = '01'
-currency1 = 'USD'
-currency2 = 'NTD'
-op        = 'Forward-30Days-Buy'
+in_filename = 'ExchangeRate@201905101600.csv'
+out_filename = 'USDNTD_201905.csv'
 
-# Import forex dataset
-months = ['01', '02', '03']
-filenames = []
-frames = []
-for month in months:
-	filenames.append(datapath+currency1+currency2+"_"+year+month+'.csv')
+df = pd.read_csv(datapath+in_filename, index_col=False)
+print(df)
 
-for f in filenames:
-	df = pd.read_csv(f)
-	dates=df['Date']
-	newdates=[]
-	for date in dates:
-		newdate=str(date)
-		newdates.append(newdate[:4]+'-'+newdate[4:6]+'-'+newdate[6:])
-	df['Date']=newdates
-	df.to_csv(f)
+# df drop columns
+print('----- drop columns ----------')
+df = df.drop(columns = ['Currency','Rate','Rate.1'])
+print(df)
 
+# df modify item
+changes_buy = ['Cash', 'Spot','Forward-10Days','Forward-30Days','Forward-60Days','Forward-90Days','Forward-120Days','Forward-150Days','Forward-180Days']
+
+print('----- rename columns ----------')
+df = df.rename(columns = {'Data Date':'Date'})
+
+for change in changes_buy:
+	df = df.rename(columns={change     : change+'-Buy'})
+	df = df.rename(columns={change+'.1': change+'-Sell'})
+print(df)
+	
+print('----- df sorting by date -------')
+df = df.sort_values(by=['Date'],ascending=True)
+print(df)
+
+newdate=[]
+for date in df['Date']:
+	date = str(date)
+	newdate.append(date[:4]+'-'+date[4:6]+'-'+date[6:])
+
+print(newdate)
+df['Date']=newdate
+print(df)
+
+# write csv
+df.to_csv(datapath+out_filename, index=False)
