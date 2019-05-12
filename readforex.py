@@ -35,8 +35,8 @@ forex_set = pd.concat(frames, ignore_index=True, sort=False)
 forex_len = len(forex_set)
 print(forex_len)
 
-# calculate moving average (window=22)
-mav = forex_set.set_index('Date').rolling(22).mean()
+# calculate moving average (window=20)
+mav = forex_set.set_index('Date').rolling(20).mean()
 
 ### Data Visualization
 # Cash-Buy vs Cash-Sell
