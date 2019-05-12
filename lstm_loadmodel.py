@@ -10,31 +10,17 @@ import pandas as pd
 # column in dataset
 cashbuy   = 1
 spotbuy   = 2
-forward_10Days_Buy = 3
-forward_30Days_Buy = 4
-forward_60Days_Buy = 5
-forward_90Days_Buy = 6
-forward_120Days_Buy = 7
-forward_150Days_Buy = 8
-forward_180Days_Buy = 9
 cashsell  = 10
 spotsell  = 11
-forward_10Days_Sell = 12
-forward_30Days_Sell = 13
-forward_60Days_Sell = 14
-forward_90Days_Sell = 15
-forward_120Days_Sell = 16
-forward_150Days_Sell = 17
-forward_180Days_Sell = 18
 
 # Configuration
 epochs    = 5000
-batch_size= 64
+batch_size= 128
 datapath  = 'data/'
 currency1 = 'USD'
 currency2 = 'NTD'
 op        = spotbuy
-predict_length=1
+predict_length=5
 
 # Importing the training set
 forex_prices = [[0]]
@@ -52,9 +38,6 @@ months = ['01', '02', '03']
 for month in months:
 	filename=currency1+currency2+"_"+year+month
 	dataset = pd.read_csv(datapath+filename+".csv")
-	ue = pd.read_csv(r'C:\Users\akuo\Downloads\UNEMPLOY.csv')
-	hpi = pd.read_csv(r'C:\Users\akuo\Downloads\USSTHPI.csv')
-	fund = pd.read_csv(r'C:\Users\akuo\Downloads\FEDFUNDS.csv')
 	forex_tmp = dataset.iloc[:,op:(op+1)].values
 	forex_prices = np.append(forex_prices, forex_tmp, axis=0)
 
@@ -79,7 +62,7 @@ print(len(train), len(test))
 
 # Convert an array of values into a dataset matrix
 def create_dataset(dataset, look_back=1):
-	dataX, dataY = [], [], [], [],[]
+	dataX, dataY = [], []
 	for i in range(len(dataset)-look_back-1):
 		a = dataset[i:(i+look_back),0]
 		dataX.append(a)
@@ -95,7 +78,7 @@ trainX = np.reshape(trainX, (trainX.shape[0], 1, trainX.shape[1]))
 testX  = np.reshape(testX, (testX.shape[0], 1, testX.shape[1]))
 
 #-----------------------------------------------
-# Part 2 - Build Model
+# Part 2 - Load Model
 #-----------------------------------------------
 # Importing the Keras libraries and packages
 from subprocess import check_output
@@ -103,6 +86,7 @@ from keras.layers.core import Dense, Activation, Dropout
 from keras.layers.recurrent import LSTM
 from keras.models import Sequential
 from sklearn.model_selection import train_test_split
+from keras.models import model_from_json
 
 import time
 import matplotlib.pyplot as plt
@@ -114,36 +98,18 @@ import tensorflow as tf
 #sess = tf.Session(config=tf.ConfigProto(gpu_options=gpu_options))
 #tf.keras.backend.set_session(sess)
 
-# Initialising the RNN
-# Creating an object of Sequential class to create the RNN.
-model = Sequential()
-
-model.add(LSTM(units = 50, activation = 'sigmoid', input_shape = (None, 1), return_sequences=True))
-model.add(Dropout(0.3))
-
-model.add(LSTM(units = 100, activation = 'sigmoid', input_shape = (None, 1), return_sequences=False))
-model.add(Dropout(0.3))
-
-
-model.add(Dense(units=1, activation='linear'))
+# load json and create model
+json_file = open("model.json", "r")
+model_json = json_file.read()
+json_file.close()
+model = model_from_json(model_json)
+# load weights into new model
+model.load_weights("model.h5")
+print("loaded model from disk")
 
 start = time.time()
-
 model.compile(loss='mse', optimizer='rmsprop')
 print('compilation time: ', time.time()-start)
-
-# Fitting the RNN to the Training set
-# Number of epochs increased for better convergence.
-model.fit(trainX, trainY, batch_size = batch_size, epochs = epochs, validation_split=0.05)
-
-### Save model
-# serialize model to JSON
-model_json = model.to_json()
-with open("model.json", "w") as json_file:
-	json_file.write(model_json)
-# serialize weights to HDF5
-model.save_weights("model.h5")
-print("Saved model to disk")
 
 #-------------------------------------------------------------
 # Part 3 - Making the predictions and visualising the results
