@@ -34,7 +34,7 @@ datapath  = 'data/'
 currency1 = 'USD'
 currency2 = 'NTD'
 op        = spotbuy
-predict_length=1
+predict_length=5
 
 # Importing the training set
 forex_prices = [[0]]
