@@ -35,14 +35,20 @@ forex_set = pd.concat(frames, ignore_index=True, sort=False)
 forex_len = len(forex_set)
 print(forex_len)
 
+# calculate moving average (window=20)
+mav = forex_set.set_index('Date').rolling(20).mean()
+
 ### Data Visualization
 # Cash-Buy vs Cash-Sell
 op='Cash-Buy'
-plt.plot(forex_set[op], color = 'b', label = year+' '+op)
+plt.plot(forex_set[op], color = 'b', label = op)
+plt.plot(mav[op], color = 'navy', label = op+' MAV')
 op='Cash-Sell'
-plt.plot(forex_set[op], color = 'r', label = year+' '+op)
+plt.plot(forex_set[op], color = 'r', label = op)
+plt.plot(mav[op], color = 'brown', label = op+' MAV')
+
 plt.xticks(range(0,forex_set.shape[0],30),forex_set['Date'].loc[::30],rotation=45)
-plt.title('Forex (USD-NTD)')
+plt.title(year+' Forex (USD-NTD)')
 plt.xlabel('Date')
 plt.ylabel('Price')
 plt.legend()
@@ -52,11 +58,11 @@ plt.show()
 i=0
 for op in ops:
 	op = op+'-Buy'
-	plt.plot(forex_set[op], color = colr[i], label = year+' '+op)
+	plt.plot(forex_set[op], color = colr[i], label = op)
 	i+=1
 
 plt.xticks(range(0,forex_set.shape[0],30),forex_set['Date'].loc[::30],rotation=45)
-plt.title('Forex (USD-NTD)')
+plt.title(year+' Forex (USD-NTD)')
 plt.xlabel('Date')
 plt.ylabel('Price')
 plt.legend()
@@ -66,11 +72,11 @@ plt.show()
 i=0
 for op in ops:
 	op = op+'-Sell'
-	plt.plot(forex_set[op], color = colr[i], label = year+' '+op)
+	plt.plot(forex_set[op], color = colr[i], label = op)
 	i+=1
 
 plt.xticks(range(0,forex_set.shape[0],30),forex_set['Date'].loc[::30],rotation=45)
-plt.title('Forex (USD-NTD)')
+plt.title(year+' Forex (USD-NTD)')
 plt.xlabel('Date')
 plt.ylabel('Price')
 plt.legend()
