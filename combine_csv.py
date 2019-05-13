@@ -6,13 +6,11 @@ import pandas as pd
 
 datapath  = 'data/'
 year      = '2018'
-month     = '01'
+months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
 currency1 = 'USD'
 currency2 = 'NTD'
 
-months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
 filenames = []
-frames = []
 for month in months:
 	filenames.append(datapath+currency1+currency2+"_"+year+month+'.csv')
 
