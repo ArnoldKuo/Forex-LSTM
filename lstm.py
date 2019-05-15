@@ -28,7 +28,7 @@ forward_150Days_Sell = 17
 forward_180Days_Sell = 18
 
 # Configuration
-epochs    = 3000
+epochs    = 5000
 batch_size= 32
 datapath  = 'data/'
 currency1 = 'USD'
