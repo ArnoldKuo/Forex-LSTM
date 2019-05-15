@@ -28,8 +28,8 @@ forward_150Days_Sell = 17
 forward_180Days_Sell = 18
 
 # Configuration
-epochs    = 5000
-batch_size= 64
+epochs    = 3000
+batch_size= 32
 datapath  = 'data/'
 currency1 = 'USD'
 currency2 = 'NTD'
@@ -46,15 +46,12 @@ for month in months:
 	dataset = pd.read_csv(datapath+filename+".csv")
 	forex_tmp = dataset.iloc[:,op:(op+1)].values
 	forex_prices = np.append(forex_prices, forex_tmp, axis=0)
-	
+
 year='2019'
 months = ['01', '02', '03']	
 for month in months:
 	filename=currency1+currency2+"_"+year+month
 	dataset = pd.read_csv(datapath+filename+".csv")
-	ue = pd.read_csv(r'C:\Users\akuo\Downloads\UNEMPLOY.csv')
-	hpi = pd.read_csv(r'C:\Users\akuo\Downloads\USSTHPI.csv')
-	fund = pd.read_csv(r'C:\Users\akuo\Downloads\FEDFUNDS.csv')
 	forex_tmp = dataset.iloc[:,op:(op+1)].values
 	forex_prices = np.append(forex_prices, forex_tmp, axis=0)
 
@@ -75,11 +72,12 @@ train_size = int(len(forex_prices)*0.8)
 test_size  = len(forex_prices)-train_size
 train = forex_prices[:train_size]
 test  = forex_prices[train_size:]
-print(len(train), len(test))
+print('train size :',len(train))
+print('test  size :',len(test))
 
 # Convert an array of values into a dataset matrix
 def create_dataset(dataset, look_back=1):
-	dataX, dataY = [], [], [], [],[]
+	dataX, dataY = [], []
 	for i in range(len(dataset)-look_back-1):
 		a = dataset[i:(i+look_back),0]
 		dataX.append(a)
@@ -116,20 +114,24 @@ import tensorflow as tf
 
 # Initialising the RNN
 # Creating an object of Sequential class to create the RNN.
+NUM_NEURONS_FirstLayer = 64
+NUM_NEURONS_SecondLayer = 64
+
 model = Sequential()
 
-model.add(LSTM(units = 50, activation = 'sigmoid', input_shape = (None, 1), return_sequences=True))
-model.add(Dropout(0.3))
+model.add(LSTM(units = NUM_NEURONS_FirstLayer, activation = 'sigmoid', input_shape = (None, 1), return_sequences=True))
+model.add(Dropout(0.2))
 
-model.add(LSTM(units = 100, activation = 'sigmoid', input_shape = (None, 1), return_sequences=False))
-model.add(Dropout(0.3))
-
+model.add(LSTM(units = NUM_NEURONS_SecondLayer, activation = 'sigmoid', input_shape = (None, 1), return_sequences=False))
+model.add(Dropout(0.2))
 
 model.add(Dense(units=1, activation='linear'))
 
 start = time.time()
 
 model.compile(loss='mse', optimizer='rmsprop')
+#model.compile(loss='mse', optimizer='adam')
+
 print('compilation time: ', time.time()-start)
 
 # Fitting the RNN to the Training set
@@ -148,9 +150,7 @@ print("Saved model to disk")
 #-------------------------------------------------------------
 # Part 3 - Making the predictions and visualising the results
 #-------------------------------------------------------------
-def plot_results_multiple(predicted_data, true_data,length):
-#	plt.plot(scaler.inverse_transform(true_data.reshape(-1, 1))[length:], color='blue', label='Real Prices')
-#	plt.plot(scaler.inverse_transform(np.array(predicted_data).reshape(-1, 1))[length:], color='red', label='Predicted Prices')
+def plot_results_multiple(predicted_data, true_data, length):
 	plt.plot(scaler.inverse_transform(true_data.reshape(-1, 1)), color='blue', label='Real Prices')
 	plt.plot(scaler.inverse_transform(np.array(predicted_data).reshape(-1, 1)), color='red', label='Predicted Prices')
 	plt.show()
@@ -177,6 +177,6 @@ predictions = predict_sequences_multiple(model, testX[0], predict_length)
 print(len(train), len(testX))
 print("predicted-price")
 print(scaler.inverse_transform(np.array(predictions).reshape(-1, 1)))
-print("read-price")
+print("real-price")
 print(scaler.inverse_transform(testY[:predict_length].reshape(-1,1)))
 plot_results_multiple(predictions, testY, predict_length)

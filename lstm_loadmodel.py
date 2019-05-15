@@ -15,12 +15,12 @@ spotsell  = 11
 
 # Configuration
 epochs    = 5000
-batch_size= 128
+batch_size= 32
 datapath  = 'data/'
 currency1 = 'USD'
 currency2 = 'NTD'
 op        = spotbuy
-predict_length=5
+predict_length=10
 
 # Importing the training set
 forex_prices = [[0]]
@@ -115,8 +115,6 @@ print('compilation time: ', time.time()-start)
 # Part 3 - Making the predictions and visualising the results
 #-------------------------------------------------------------
 def plot_results_multiple(predicted_data, true_data,length):
-#	plt.plot(scaler.inverse_transform(true_data.reshape(-1, 1))[length:], color='blue', label='Real Prices')
-#	plt.plot(scaler.inverse_transform(np.array(predicted_data).reshape(-1, 1))[length:], color='red', label='Predicted Prices')
 	plt.plot(scaler.inverse_transform(true_data.reshape(-1, 1)), color='blue', label='Real Prices')
 	plt.plot(scaler.inverse_transform(np.array(predicted_data).reshape(-1, 1)), color='red', label='Predicted Prices')
 	plt.show()
@@ -143,6 +141,6 @@ predictions = predict_sequences_multiple(model, testX[0], predict_length)
 print(len(train), len(testX))
 print("predicted-price")
 print(scaler.inverse_transform(np.array(predictions).reshape(-1, 1)))
-print("read-price")
+print("real-price")
 print(scaler.inverse_transform(testY[:predict_length].reshape(-1,1)))
 plot_results_multiple(predictions, testY, predict_length)
